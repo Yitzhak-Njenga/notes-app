@@ -6,7 +6,7 @@ import { ApplicationProvider, BottomNavigation, BottomNavigationTab, Layout, Tex
 import * as eva from '@eva-design/eva';
 import { useState } from 'react/cjs/react.production.min';
 import AsyncStorage from '@react-native-community/async-storage';
-import { KeyboardAvoidingView, Platform, TextInput } from 'react-native-web';
+import { Dimensions, KeyboardAvoidingView, Platform, TextInput } from 'react-native-web';
 
 
 export default function createNote() {
@@ -32,7 +32,7 @@ export default function createNote() {
         selectionColor="#fff"/>
         <KeyboardAvoidingView behavior={Platform.OS ==="ios" ? "padding" : "height"} style={StyleSheet.bottom}>
             <Button style={StyleSheet.button} appearance="filled"
-            onPress={save}
+            onPress={saveNote}
             >
                 Create Note
             </Button>
@@ -46,8 +46,21 @@ export default function createNote() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#222B45",
     backgroundColor: '#fff',
+    color:"white",
+    padding:30,
+    paddingTop:80,
     alignItems: 'center',
     justifyContent: 'center',
+    width:Dimensions.get("window").width
   },
+  bottom: {
+      flex:1,
+      justifyContent:"flex-end",
+      marginBottom:36
+  },
+  button: {
+      marginBottom: 30
+  }
 });
