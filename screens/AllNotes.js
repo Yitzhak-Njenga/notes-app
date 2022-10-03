@@ -1,12 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View,Text } from 'react-native';
+import { StyleSheet, View, Dimensions, TextInput } from 'react-native';
 import { NavigationContainer, useFocusEffect, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { ApplicationProvider, BottomNavigation, BottomNavigationTab, Layout, Text,Button } from '@ui-kitten/components';
+import { ApplicationProvider, BottomNavigation, BottomNavigationTab, Layout, Text,Button,Divider,List,ListItem } from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
 import { useState } from 'react/cjs/react.production.min';
 import AsyncStorage from '@react-native-community/async-storage';
-import { Dimensions, KeyboardAvoidingView, Platform, TextInput } from 'react-native-web';
+import {  KeyboardAvoidingView, Platform } from 'react-native-web';
 import { getIgnorePatterns } from 'react-native/Libraries/LogBox/Data/LogBoxData';
 
 
@@ -27,48 +27,45 @@ export default function createNote() {
         })
     }
 
+    const renderItem = ({ item, index }) => (
+        <ListItem
+          title={<Text category="h5">{item}</Text>}
+          onPress ={()=>navigation.navigate("Note",{
+              singleNote:item
+          })}
+          
+        />
+      );
+
   
   return (
  
-    <View>
-        <TextInput
-        value={note}
-        onChangeText={setNote}
-        style={{color: "#fff",fontSize:22}}
-        multiline={true}
-        autofocus
-        selectionColor="#fff"/>
-        <KeyboardAvoidingView behavior={Platform.OS ==="ios" ? "padding" : "height"} style={StyleSheet.bottom}>
-            <Button style={StyleSheet.button} appearance="filled"
-            onPress={saveNote}
-            >
-                Create Note
-            </Button>
-        </KeyboardAvoidingView>
-
+    <View style={{backgroundColor: "#222B45",flex:1}}>
+      <List
+      style={styles.container}
+      data={notes.reverse()}
+      ItemSeparatorComponent={Divider}
+      renderItem={renderItem}
+    />
 
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#222B45",
-    backgroundColor: '#fff',
-    color:"white",
-    padding:30,
-    paddingTop:80,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width:Dimensions.get("window").width
+   
   },
-  bottom: {
-      flex:1,
-      justifyContent:"flex-end",
-      marginBottom:36
+  item:{
+      marginVertical:4
   },
-  button: {
-      marginBottom: 30
+  title:{
+      textAlign: "center",
+      marginTop: 50
+  },
+  notes:{
+      fontSize:24
+  
   }
 });
